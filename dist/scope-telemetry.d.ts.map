@@ -1,0 +1,1 @@
+{"version":3,"file":"scope-telemetry.d.ts","sourceRoot":"","sources":["../src/scope-telemetry.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,eAAe,CAAC;AAmB7C,oFAAoF;AACpF,wBAAgB,cAAc;IAK1B,gFAAgF;IAChF,GAAG,CAAC,KAAK,QAAQ,IAAI,OAAO,MAAM,KAAK,GAAG,KAAK;IAG/C,GAAG,UAAU,IAAI,GAAG,OAAO,WAAW,SAAS,OAAO,EAAE,WAAW,SAAS,OAAO,EAAE,cAAc,MAAM;EA6B5G"}

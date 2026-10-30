@@ -1,0 +1,68 @@
+{
+  "name": "@arki/async",
+  "version": "0.2.0",
+  "description": "Small, exact timing and concurrency helpers for every JavaScript runtime — an abortable sleep, debounce and throttle with the lodash contract, and scopes with structured concurrency on plain Promises and AbortSignal, all with coded errors.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arki-labs/arki.git"
+  },
+  "homepage": "https://arki.dev",
+  "bugs": {
+    "url": "https://github.com/arki-labs/arki/issues"
+  },
+  "keywords": [
+    "arki",
+    "typescript",
+    "async",
+    "sleep",
+    "delay",
+    "debounce",
+    "throttle",
+    "abort",
+    "AbortSignal",
+    "timer",
+    "concurrency",
+    "structured-concurrency",
+    "scope",
+    "p-map"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "import": "./dist/errors.js",
+      "default": "./dist/errors.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**",
+    "src/**",
+    "!src/**/*.test.*",
+    "!src/**/*.spec.*",
+    "!src/**/__tests__/**",
+    "README.md",
+    "LICENSE",
+    "llms.txt",
+    "docs/**",
+    "AGENTS.md",
+    "package.json"
+  ],
+  "dependencies": {
+    "@arki/clock": "0.2.0",
+    "@arki/failure": "0.3.0",
+    "@arki/schema": "0.3.0",
+    "@opentelemetry/api": "^1.9.1",
+    "@standard-schema/spec": "^1.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

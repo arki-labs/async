@@ -1,0 +1,1 @@
+{"version":3,"file":"watch-signal.d.ts","sourceRoot":"","sources":["../src/watch-signal.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,eAAe,CAAC;AAEjD,6FAA6F;AAC7F,wBAAgB,WAAW,CACzB,MAAM,EAAE,WAAW,GAAG,SAAS,EAC/B,MAAM,EAAE,CAAC,MAAM,EAAE,OAAO,KAAK,IAAI,EACjC,MAAM,EAAE,CAAC,OAAO,EAAE,UAAU,CAAC,OAAO,gBAAgB,CAAC,KAAK,IAAI,sGAuC/D"}
