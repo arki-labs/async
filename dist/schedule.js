@@ -5,7 +5,7 @@ import { systemClock } from './system-clock.js';
  * the latest arguments win, and a call that arrives while the timer runs
  * never starts a second timer.
  */
-function schedule(name, fn, wait, leading, trailing, maxWait, clock) {
+function schedule(name, fn, wait, leading, trailing, maxWait, clock, onError) {
     assertWait(name, 'wait', wait);
     if (maxWait !== undefined)
         assertWait(name, 'maxWait', maxWait);
@@ -18,12 +18,31 @@ function schedule(name, fn, wait, leading, trailing, maxWait, clock) {
     let timer;
     let lastCallTime;
     let lastInvokeTime = 0;
+    const fail = (error) => {
+        if (onError === undefined) {
+            queueMicrotask(() => {
+                throw error;
+            });
+        }
+        else {
+            onError(error);
+        }
+    };
     const invoke = (time) => {
         const args = lastArgs;
         lastArgs = undefined;
         lastInvokeTime = time;
-        if (args !== undefined)
-            fn(...args);
+        if (args === undefined)
+            return;
+        try {
+            const result = fn(...args);
+            // `fn` is typed to return void, but an async function fits that type: observe its rejection.
+            if (result instanceof Promise)
+                void result.catch(fail);
+        }
+        catch (error) {
+            fail(error);
+        }
     };
     const remaining = (time) => {
         const waiting = wait - (time - (lastCallTime ?? time));
@@ -100,17 +119,17 @@ function isScheduled(f) {
 }
 /**
  * Delays `fn` until `wait` ms have passed without a new call. The latest
- * arguments win. Defaults: `leading: false`, `trailing: true`. Throws
+ * arguments win. Defaults: `leading: false`, `trailing: true`. An error from `fn` goes to `onError`. Throws
  * `ARKI_ASYNC_E001` for an invalid `wait` or `maxWait`.
  */
 export function debounce(fn, wait, options = {}) {
-    return schedule('debounce', fn, wait, options.leading ?? false, options.trailing ?? true, options.maxWait, options.clock);
+    return schedule('debounce', fn, wait, options.leading ?? false, options.trailing ?? true, options.maxWait, options.clock, options.onError);
 }
 /**
  * Calls `fn` at most once per `wait` ms. It is a debounce with `maxWait = wait`.
  * Defaults: `leading: true`, `trailing: true`. Throws `ARKI_ASYNC_E001` for an invalid `wait`.
  */
 export function throttle(fn, wait, options = {}) {
-    return schedule('throttle', fn, wait, options.leading ?? true, options.trailing ?? true, wait, options.clock);
+    return schedule('throttle', fn, wait, options.leading ?? true, options.trailing ?? true, wait, options.clock, options.onError);
 }
 //# sourceMappingURL=schedule.js.map

@@ -19,6 +19,12 @@ export type DebounceOptions = {
     readonly maxWait?: number;
     /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */
     readonly clock?: Clock;
+    /**
+     * Receives an error thrown by `fn`, or the rejection of a promise `fn` returned. Without it the error is
+     * rethrown from a microtask, which is an uncaught error. Either way the schedule stays consistent and a
+     * call from the leading edge never throws into the caller.
+     */
+    readonly onError?: (error: unknown) => void;
 };
 /** Options of {@link throttle}. */
 export type ThrottleOptions = {
@@ -28,10 +34,16 @@ export type ThrottleOptions = {
     readonly trailing?: boolean;
     /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */
     readonly clock?: Clock;
+    /**
+     * Receives an error thrown by `fn`, or the rejection of a promise `fn` returned. Without it the error is
+     * rethrown from a microtask, which is an uncaught error. Either way the schedule stays consistent and a
+     * call from the leading edge never throws into the caller.
+     */
+    readonly onError?: (error: unknown) => void;
 };
 /**
  * Delays `fn` until `wait` ms have passed without a new call. The latest
- * arguments win. Defaults: `leading: false`, `trailing: true`. Throws
+ * arguments win. Defaults: `leading: false`, `trailing: true`. An error from `fn` goes to `onError`. Throws
  * `ARKI_ASYNC_E001` for an invalid `wait` or `maxWait`.
  */
 export declare function debounce<A extends readonly unknown[]>(fn: (...args: A) => void, wait: number, options?: DebounceOptions): Scheduled<A>;

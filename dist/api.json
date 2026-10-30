@@ -1,6 +1,6 @@
 {
   "package": "@arki/async",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "entries": [
     {
       "subpath": ".",
@@ -112,13 +112,13 @@
       "name": "debounce",
       "kind": "function",
       "signature": "export declare function debounce<A extends readonly unknown[]>(fn: (...args: A) => void, wait: number, options?: DebounceOptions): Scheduled<A>;",
-      "jsdocSummary": "Delays `fn` until `wait` ms have passed without a new call. The latest arguments win. Defaults: `leading: false`, `trailing: true`. Throws `ARKI_ASYNC_E001` for an invalid `wait` or `maxWait`."
+      "jsdocSummary": "Delays `fn` until `wait` ms have passed without a new call. The latest arguments win. Defaults: `leading: false`, `trailing: true`. An error from `fn` goes to `onError`. Throws `ARKI_ASYNC_E001` for an invalid `wait` or `maxWait`."
     },
     {
       "subpath": ".",
       "name": "DebounceOptions",
       "kind": "type",
-      "signature": "export type DebounceOptions = { /** Call on the first call of a burst. Default `false`. */ readonly leading?: boolean; /** Call after the burst ends. Default `true`. */ readonly trailing?: boolean; /** Longest time a burst may delay the call. Raised to `wait` when smaller. */ readonly maxWait?: number; /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */ readonly clock?: Clock; };",
+      "signature": "export type DebounceOptions = { /** Call on the first call of a burst. Default `false`. */ readonly leading?: boolean; /** Call after the burst ends. Default `true`. */ readonly trailing?: boolean; /** Longest time a burst may delay the call. Raised to `wait` when smaller. */ readonly maxWait?: number; /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */ readonly clock?: Clock; /** * Receives an error thrown by `fn`, or the rejection of a promise `fn` returned. Without it the error is * rethrown from a microtask, which is an uncaught error. Either way the schedule stays consistent and a * call from the leading edge never throws into the caller. */ readonly onError?: (error: unknown) => void; };",
       "jsdocSummary": "Options of {@link debounce}."
     },
     {
@@ -286,7 +286,7 @@
       "subpath": ".",
       "name": "ThrottleOptions",
       "kind": "type",
-      "signature": "export type ThrottleOptions = { /** Call on the first call of a window. Default `true`. */ readonly leading?: boolean; /** Call at the end of the window with the latest arguments. Default `true`. */ readonly trailing?: boolean; /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */ readonly clock?: Clock; };",
+      "signature": "export type ThrottleOptions = { /** Call on the first call of a window. Default `true`. */ readonly leading?: boolean; /** Call at the end of the window with the latest arguments. Default `true`. */ readonly trailing?: boolean; /** Whose time and timers to use. Default: the system clock. Pass a `MockClock` to make tests instant. */ readonly clock?: Clock; /** * Receives an error thrown by `fn`, or the rejection of a promise `fn` returned. Without it the error is * rethrown from a microtask, which is an uncaught error. Either way the schedule stays consistent and a * call from the leading edge never throws into the caller. */ readonly onError?: (error: unknown) => void; };",
       "jsdocSummary": "Options of {@link throttle}."
     },
     {
